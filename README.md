@@ -9,7 +9,7 @@
     "type": "package",
     "package": {
         "name": "jimanx2/laravel-db-timezone",
-        "version": "1.8.7",
+        "version": "0.0.1",
         "type":"package",
         "source": {
             "url": "https://github.com/jimanx2/laravel-db-timezone",
