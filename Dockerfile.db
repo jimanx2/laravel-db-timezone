@@ -1,5 +1,0 @@
-FROM yobasystems/alpine-mariadb
-
-RUN apk add --no-cache tzdata && \
-    echo default-time-zone="+08:00" > /etc/my.cnf.d/00-timezone-asia-kuala_lumpur.cnf
-ENV TZ=Asia/Kuala_Lumpur
