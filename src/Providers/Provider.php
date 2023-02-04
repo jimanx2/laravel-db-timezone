@@ -17,7 +17,9 @@ class Provider extends ServiceProvider
     public function register()
     {
         //
-        
+        $this->mergeConfigFrom(
+            __DIR__.'/../Config/dbtz.php', 'dbtz'
+        );
     }
 
     /**
@@ -27,6 +29,10 @@ class Provider extends ServiceProvider
      */
     public function boot()
     {
+        $this->publishes([
+            __DIR__.'/../Config/dbtz.php' => config_path('dbtz.php'),
+        ]);
+
         // Query DB timezone offset
         $offset = DB::select(DB::raw("SELECT TIMEDIFF(NOW(), UTC_TIMESTAMP) AS `offset`"))[0]->offset;
         list($hrs, $mins, $secs) = explode(":", $offset);
@@ -35,11 +41,23 @@ class Provider extends ServiceProvider
         Config::set("database.connections.".config("database.default").".timezone_rev", "-{$hrs}:{$mins}");
         
         // Register all model observers
-        $filesInFolder = \File::files(app_path('Models'));
+        $paths = config("dbtz.search_path.models");
+        foreach($paths as $namespace => $dir) {
+            $filesInFolder = \File::files($dir);
 
-        foreach($filesInFolder as $path) {
-            $modelClassName = "App\\Models\\".basename($path, '.php');
-            $modelClassName::observe(DateTimeObserver::class);
+            foreach($filesInFolder as $path) {
+                $modelClassName = $namespace.ucfirst(basename($path, '.php'));
+                if (!class_exists($modelClassName)) {
+                    echo "Warning: $modelClassName is not a valid class. Skipping." . PHP_EOL;
+                    continue;
+                }
+
+                if (!method_exists($modelClassName, "observe")) {
+                    echo "Warning: $modelClassName is not an observable Model. Skipping." . PHP_EOL;
+                    continue;
+                }
+                $modelClassName::observe(DateTimeObserver::class);
+            }
         }
     }
 }

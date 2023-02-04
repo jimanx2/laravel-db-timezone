@@ -13,6 +13,7 @@ services:
       - |
         touch database/development.sqlite
         [ ! -f vendor/autoload ] && composer install
+        php artisan migrate
         sh $$@
     depends_on:
       - database
