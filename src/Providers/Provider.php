@@ -42,7 +42,9 @@ class Provider extends ServiceProvider
         
         // Register all model observers
         $paths = config("dbtz.search_path.models");
-        foreach($paths as $namespace => $dir) {
+	foreach($paths as $namespace => $dir) {
+	    if (!\File::exists($dir)) 
+                continue;	
             $filesInFolder = \File::files($dir);
 
             foreach($filesInFolder as $path) {
