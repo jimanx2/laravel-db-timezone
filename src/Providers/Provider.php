@@ -33,12 +33,16 @@ class Provider extends ServiceProvider
             __DIR__.'/../Config/dbtz.php' => config_path('dbtz.php'),
         ]);
 
-        // Query DB timezone offset
-        $offset = DB::select(DB::raw("SELECT TIMEDIFF(NOW(), UTC_TIMESTAMP) AS `offset`"))[0]->offset;
-        list($hrs, $mins, $secs) = explode(":", $offset);
+        try {
+            // Query DB timezone offset
+            $offset = DB::select(DB::raw("SELECT TIMEDIFF(NOW(), UTC_TIMESTAMP) AS `offset`"))[0]->offset;
+            list($hrs, $mins, $secs) = explode(":", $offset);
+        } catch (\Exception $ex) {
+            echo "Warning: failed to retrieve database timezone. disabling timezone handling." . PHP_EOL;
+            return;
+        }
 
         Config::set("database.connections.".config("database.default").".timezone", "+{$hrs}:{$mins}");
-        Config::set("database.connections.".config("database.default").".timezone_rev", "-{$hrs}:{$mins}");
         
         // Register all model observers
         $paths = config("dbtz.search_path.models");
