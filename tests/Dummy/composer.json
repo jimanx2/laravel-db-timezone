@@ -61,8 +61,17 @@
     },
     "repositories": {
         "jimanx2/laravel-db-timezone": {
-            "type": "path",
-            "url": "/app/"
+            "type": "package",
+            "package": {
+                "name": "jimanx2/laravel-db-timezone",
+                "version": "0.0.1",
+                "type":"package",
+                "source": {
+                    "url": "https://github.com/jimanx2/laravel-db-timezone",
+                    "type": "git",
+                    "reference": "main"
+                }
+            }
         }
     }
 }

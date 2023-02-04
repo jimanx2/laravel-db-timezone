@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "8e72de7d3855e5382404a07680caf6ef",
+    "content-hash": "5a63ab64ce63fa7b4c07b381bfb44a18",
     "packages": [
         {
             "name": "dnoegel/php-xdg-base-dir",
@@ -538,37 +538,13 @@
         },
         {
             "name": "jimanx2/laravel-db-timezone",
-            "version": "dev-main",
-            "dist": {
-                "type": "path",
-                "url": "/app",
-                "reference": "ed47e8d0784dfd6e84cb795ab5bff750aedb156d"
+            "version": "0.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/jimanx2/laravel-db-timezone",
+                "reference": "main"
             },
-            "require-dev": {
-                "laravel/framework": "5.*|6.*|7.*|8.*|9.*"
-            },
-            "type": "library",
-            "extra": {
-                "laravel": {
-                    "providers": [
-                        "Jimanx2\\LaravelDbTimezone\\Providers\\Provider"
-                    ]
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Jimanx2\\LaravelDbTimezone\\": "src/"
-                }
-            },
-            "authors": [
-                {
-                    "name": "Haziman Hashim",
-                    "email": "haziman.hashim@razer.com"
-                }
-            ],
-            "transport-options": {
-                "relative": false
-            }
+            "type": "package"
         },
         {
             "name": "kylekatarnls/update-helper",
