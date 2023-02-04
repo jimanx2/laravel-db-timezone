@@ -1,5 +1,6 @@
 # laravel-db-timezone
 (Experimental) Laravel package to handle date time with non-UTC databases
+> Note: I made this only to support mysql driver as of now
 
 # Installation
 1. Add the following into `repositories` section in `composer.json`
@@ -58,4 +59,16 @@ php artisan tinker
      created_at: "2023-02-04 08:45:32",
      updated_at: "2023-02-04 08:47:16",
    }
+>>> # Inside database it will look like this
+>>> # Notice the timezone difference (my test database has +0800 offset)
+>>> DB::select(DB::raw("SELECT * FROM samples"))
+=> [
+     {#3254
+       +"id": 2,
+       +"value": 23456,
+       +"collected_at": "2023-02-04 16:45:32",
+       +"created_at": "2023-02-04 16:45:32",
+       +"updated_at": "2023-02-04 16:47:16",
+     },
+   ]
 ```
